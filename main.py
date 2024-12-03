@@ -11,6 +11,9 @@ clock = pg.time.Clock()
 #game window
 screen = pg.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
 pg.display.set_caption("Emerald Village Defence")
+
+#load images
+enemy_image = pg.image.load('images/enemy_1.png').convert_alpha()
 #game loop 
 run = True 
 while run:
