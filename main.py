@@ -12,8 +12,8 @@ pg.init()
 clock = pg.time.Clock()
 
 #game window
-screen = pg.display.set_mode((c.SCREEN_WIDTH, c.SCREEN_HEIGHT))
-pg.display.set_caption("Emerald Village Defence")
+screen = pg.display.set_mode((c.SCREEN_WIDTH + c.SIDE_PANEL, c.SCREEN_HEIGHT))
+pg.display.set_caption("Emerald Village: Defence")
 
 #load images
 #map
