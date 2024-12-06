@@ -23,6 +23,10 @@ cursor_turret = pg.image.load('images/cursor_turret.png').convert_alpha()
 #enemies
 enemy_image = pg.image.load('images/enemy_1.png').convert_alpha()
 
+#button
+buy_turret_image = pg.image.load('images/buy_turret.png').convert_alpha()
+
+
 #load json data for level
 with open('map/waypoints.json') as file:
    world_data = json.load(file)
