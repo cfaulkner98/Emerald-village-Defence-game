@@ -27,9 +27,9 @@ class Turret(pg.sprite.Sprite):
         self.rect.center = (self.x, self.y)
 
         #create transparent circle showing range
-        self.range_image = pg.surface((self.range * 2, self.range * 2))
+        self.range_image = pg.Surface((self.range * 2, self.range * 2))
         self.range_image.fill((0, 0, 0))
-        self.range_image.set_colourkey((0, 0, 0))
+        self.range_image.set_colorkey((0, 0, 0))
         pg.draw.circle(self.range_image, "grey100", (self.range, self.range), self.range)
         self.range_image.set_alpha(100)
         self.range_rect = self.range_image.get_rect()
