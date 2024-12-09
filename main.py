@@ -27,7 +27,7 @@ turret_sheet = pg.image.load('images/turret_1.png').convert_alpha()
 #individual turret image for mouse cursor
 cursor_turret = pg.image.load('images/cursor_turret.png').convert_alpha()
 #enemies
-enemy_image = pg.image.load('images/enemy_1.png').convert_alpha()
+enemy_image = pg.image.load('images/witch_2.png').convert_alpha()
 #button
 buy_turret_image = pg.image.load('images/buy_turret.png').convert_alpha()
 cancel_image = pg.image.load('images/cancel.png').convert_alpha()
