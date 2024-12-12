@@ -18,7 +18,7 @@ class Enemy(pg.sprite.Sprite):
         self.rect.center = self.pos
     def update(self):
         self.move()  # Just update the movement, no rotation
-
+        self.check_alive()
     def move(self):
         # Define target waypoint
         if self.target_waypoint < len(self.waypoints):
@@ -41,6 +41,10 @@ class Enemy(pg.sprite.Sprite):
 
         # Update the rect position for the sprite
         self.rect.center = self.pos
+
+    def check_alive(self):
+        if self.health <= 0:
+            self.kill()
         
   
        

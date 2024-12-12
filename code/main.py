@@ -76,6 +76,8 @@ def create_turret(mouse_pos):
       if space_is_free == True:
          new_turret = Turret(turret_spritesheets, mouse_tile_x, mouse_tile_y)
          turret_group.add(new_turret)
+         #deduct cost of turret
+         world.money -= c.BUY_COST
 
 def select_turret(mouse_pos):
    mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
@@ -162,7 +164,9 @@ while run:
      #if a turret can be upgraded then show a upgrade button
      if selected_turret.upgrade_level < c.TURRET_LEVELS:
        if button_upgrade.draw(screen):
-         selected_turret.upgrade()
+         if world.money >= c.UPGRADE_COST:
+           selected_turret.upgrade()
+           world.money -= c.UPGRADE_COST
        
     
     #event handler
@@ -179,7 +183,9 @@ while run:
             selected_turret = None 
             clear_selection()
             if placing_turrets == True:
-               create_turret(mouse_pos)
+               #check if there is enough money for turret
+               if world.money >= c.BUY_COST: 
+                 create_turret(mouse_pos)
             else:
                selected_turret = select_turret(mouse_pos)
             

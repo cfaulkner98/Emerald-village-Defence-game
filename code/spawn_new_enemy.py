@@ -1,38 +1,38 @@
 ENEMY_SPAWN_DATA = [
   {
     #1
-    "weak": 13,
-    "medium": 2,
+    "weak": 10,
+    "medium": 0,
     "strong": 0,
     "elite": 0
   },
   {
     #2
-    "weak": 10,
-    "medium": 4,
-    "strong": 2,
+    "weak": 12,
+    "medium": 2,
+    "strong": 0,
     "elite": 0
   },
   {
     #3
-    "weak": 8,
-    "medium": 5,
-    "strong": 3,
-    "elite": 1
+    "weak": 13,
+    "medium": 3,
+    "strong": 2,
+    "elite": 0
   },
   {
     #4
-    "weak": 14,
-    "medium": 8,
-    "strong": 4,
-    "elite": 3
+    "weak": 13,
+    "medium": 3,
+    "strong": 0,
+    "elite": 1
   },
   {
     #5
-    "weak": 5,
-    "medium": 20,
+    "weak": 7,
+    "medium": 5,
     "strong": 0,
-    "elite": 0
+    "elite": 2
   },
   {
     #6
@@ -46,14 +46,14 @@ ENEMY_SPAWN_DATA = [
     "weak": 20,
     "medium": 25,
     "strong": 5,
-    "elite": 0
+    "elite": 1
   },
   {
     #8
     "weak": 10,
     "medium": 20,
     "strong": 15,
-    "elite": 0
+    "elite": 3
   },
   {
     #9
@@ -88,21 +88,21 @@ ENEMY_SPAWN_DATA = [
     "weak": 20,
     "medium": 0,
     "strong": 25,
-    "elite": 10
+    "elite": 5
   },
   {
     #14
     "weak": 15,
     "medium": 15,
     "strong": 15,
-    "elite": 15
+    "elite": 3
   },
   {
     #15
     "weak": 22,
     "medium": 20,
     "strong": 10,
-    "elite": 13
+    "elite": 4
   }
 ]
 
