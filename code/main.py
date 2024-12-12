@@ -32,7 +32,7 @@ enemy_image = pg.image.load('images/witch_2.png').convert_alpha()
 #button
 buy_turret_image = pg.image.load('images/buy_turret.png').convert_alpha()
 cancel_image = pg.image.load('images/cancel.png').convert_alpha()
-upgrade_turret_image = pg.image.load('images/turret_upgrade').convert_alpha()
+upgrade_turret_image = pg.image.load('images/turret_upgrade.png').convert_alpha()
 
 #load json data for level
 with open('map/waypoints.json') as file:
@@ -81,6 +81,7 @@ enemy_group.add(enemy)
 #create buttons
 turret_button = Button(c.SCREEN_WIDTH + 30, 120, buy_turret_image, True)
 cancel_button = Button(c.SCREEN_WIDTH + 50, 180, cancel_image, True)
+button_upgrade = Button(c.SCREEN_WIDTH + 5, 180, upgrade_turret_image, True )
 
 #game loop 
 run = True 
@@ -124,6 +125,10 @@ while run:
          screen.blit(cursor_turret, cursor_rect)
       if cancel_button.draw(screen):
          placing_turrets = False
+      #if turret is selected then show the upgrade button
+      if selected_turret:
+         if button_upgrade.draw(screen):
+            selected_turret.upgrade()
        
     
     #event handler
