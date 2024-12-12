@@ -53,6 +53,11 @@ with open('map/waypoints.json') as file:
 text_font = pg.font.SysFont("Consolas", 24, bold = True)
 large_font = pg.font.SysFont("Consolas", 34)
 
+#function for outputting text onto screen
+def draw_text(text, font, text_col, x, y):
+   img = font.render(text, True, text_col)
+   screen.blit(img, (x, y))
+
 
 
 def create_turret(mouse_pos):
@@ -124,6 +129,10 @@ while run:
     enemy_group.draw(screen)
     for turret in turret_group:
        turret.draw(screen)
+
+    draw_text(str(world.health), text_font, "grey100", 0 , 0)
+    draw_text(str(world.money),text_font, "grey100", 0, 30)
+
 
    #spawn enemy
     if pg.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
