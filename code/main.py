@@ -32,6 +32,7 @@ enemy_image = pg.image.load('images/witch_2.png').convert_alpha()
 #button
 buy_turret_image = pg.image.load('images/buy_turret.png').convert_alpha()
 cancel_image = pg.image.load('images/cancel.png').convert_alpha()
+upgrade_turret_image = pg.image.load('images/turret_upgrade').convert_alpha()
 
 #load json data for level
 with open('map/waypoints.json') as file:
