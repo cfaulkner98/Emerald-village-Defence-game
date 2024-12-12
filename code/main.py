@@ -126,9 +126,11 @@ while run:
       if cancel_button.draw(screen):
          placing_turrets = False
       #if turret is selected then show the upgrade button
-      if selected_turret:
-         if button_upgrade.draw(screen):
-            selected_turret.upgrade()
+    if selected_turret:
+     #if a turret can be upgraded then show a upgrade button
+     if selected_turret.upgrade_level < c.TURRET_LEVELS:
+       if button_upgrade.draw(screen):
+         selected_turret.upgrade()
        
     
     #event handler

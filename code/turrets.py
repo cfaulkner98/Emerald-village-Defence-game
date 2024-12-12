@@ -89,7 +89,7 @@ class Turret(pg.sprite.Sprite):
                 self.target = None
 
     def upgrade(self):
-        self.upgrade_level =+ 1
+        self.upgrade_level += 1
         self.range = TURRET_DATA[self.upgrade_level - 1].get("range")
         self.cooldown = TURRET_DATA[self.upgrade_level - 1].get("cooldown")
 
