@@ -5,6 +5,11 @@ SIDE_PANEL = 300
 SCREEN_WIDTH = TILE_SIZE * COLS
 SCREEN_HEIGHT = TILE_SIZE * ROWS
 FPS = 60
+health = 100
+money = 650
+
+#enemy constant
+SPAWN_COOLDOWN = 380
 
 #turret constants
 TURRET_LEVELS = 4

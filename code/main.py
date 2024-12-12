@@ -17,6 +17,7 @@ screen = pg.display.set_mode((c.SCREEN_WIDTH + c.SIDE_PANEL, c.SCREEN_HEIGHT))
 pg.display.set_caption("Emerald Village: Defence")
 
 #game variables
+last_enemy_spawn = pg.time.get_ticks()
 placing_turrets = False
 selected_turret = None
 
@@ -25,10 +26,20 @@ selected_turret = None
 map_image = pg.image.load('map/level.png').convert_alpha()
 #turret sprite sheets
 turret_sheet = pg.image.load('images/turret_1.png').convert_alpha()
+turret_spritesheets = []
+for x in range(1, c.TURRET_LEVELS + 1):
+   turret_sheet = pg.image.load(f'images/turret_{x}.png').convert_alpha()
+   turret_spritesheets.append(turret_sheet)
 #individual turret image for mouse cursor
 cursor_turret = pg.image.load('images/cursor_turret.png').convert_alpha()
 #enemies
-enemy_image = pg.image.load('images/witch_2.png').convert_alpha()
+enemy_images = {
+   "weak": pg.image.load('images/witch_1.png').convert_alpha(),
+   "medium": pg.image.load('images/witch_3.png').convert_alpha(),
+   "strong": pg.image.load('images/witch_2.png').convert_alpha(),
+   "elite": pg.image.load('images/witch_4.png').convert_alpha()
+}
+
 #button
 buy_turret_image = pg.image.load('images/buy_turret.png').convert_alpha()
 cancel_image = pg.image.load('images/cancel.png').convert_alpha()
@@ -37,6 +48,12 @@ upgrade_turret_image = pg.image.load('images/turret_upgrade.png').convert_alpha(
 #load json data for level
 with open('map/waypoints.json') as file:
    world_data = json.load(file)
+
+#load font for displaying text on screen
+text_font = pg.font.SysFont("Consolas", 24, bold = True)
+large_font = pg.font.SysFont("Consolas", 34)
+
+
 
 def create_turret(mouse_pos):
    mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
@@ -52,7 +69,7 @@ def create_turret(mouse_pos):
             space_is_free = False
       #if it is a free space then create turret
       if space_is_free == True:
-         new_turret = Turret(turret_sheet, mouse_tile_x, mouse_tile_y)
+         new_turret = Turret(turret_spritesheets, mouse_tile_x, mouse_tile_y)
          turret_group.add(new_turret)
 
 def select_turret(mouse_pos):
@@ -69,14 +86,11 @@ def clear_selection():
 #create world
 world = World(world_data, map_image)
 world.process_data()
+world.process_enemies()
 
 #create groups 
 enemy_group = pg.sprite.Group()
 turret_group = pg.sprite.Group()
-
-
-enemy = Enemy((world.waypoints), enemy_image)
-enemy_group.add(enemy)
 
 #create buttons
 turret_button = Button(c.SCREEN_WIDTH + 30, 120, buy_turret_image, True)
@@ -110,6 +124,15 @@ while run:
     enemy_group.draw(screen)
     for turret in turret_group:
        turret.draw(screen)
+
+   #spawn enemy
+    if pg.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
+      if world.spawned_enemies < len(world.enemy_list):
+        enemy_type = world.enemy_list[world.spawned_enemies]
+        enemy = Enemy(enemy_type, world.waypoints, enemy_images)
+        enemy_group.add(enemy)
+        world.spawned_enemies += 1
+        last_enemy_spawn = pg.time.get_ticks()
     
     #draw buttons
     #button for placing turret
