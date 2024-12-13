@@ -17,6 +17,8 @@ screen = pg.display.set_mode((c.SCREEN_WIDTH + c.SIDE_PANEL, c.SCREEN_HEIGHT))
 pg.display.set_caption("Emerald Village: Defence")
 
 #game variables
+game_over = False
+game_outcome = 0 #-1 lose 1 win
 level_started = False
 last_enemy_spawn = pg.time.get_ticks()
 placing_turrets = False
@@ -115,9 +117,16 @@ while run:
     
     #updating section
     ################
-   #update groups
-    enemy_group.update(world)
-    turret_group.update(enemy_group)
+
+    if game_over == False:
+       #check if player lost
+       if world.health <= 0:
+          game_over = True
+          game_outcome = -1 #lose
+
+       #update groups
+       enemy_group.update(world)
+       turret_group.update(enemy_group)
 
     #highlight selected turret
     if selected_turret:
@@ -139,14 +148,16 @@ while run:
     draw_text(str(world.money),text_font, "grey100", 0, 30)
     draw_text(str(world.level),text_font, "grey100", 0, 60)
 
-   #check if level is being started or not
-    if level_started == False:
+
+    if game_over == False:
+    #check if level is being started or not
+     if level_started == False:
        if begin_button.draw(screen):
          level_started = True
-    else:
+     else:
      #spawn enemy
-     if pg.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
-        if world.spawned_enemies < len(world.enemy_list):
+      if pg.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
+         if world.spawned_enemies < len(world.enemy_list):
           enemy_type = world.enemy_list[world.spawned_enemies]
           enemy = Enemy(enemy_type, world.waypoints, enemy_images)
           enemy_group.add(enemy)
@@ -154,7 +165,7 @@ while run:
           last_enemy_spawn = pg.time.get_ticks()
 
     #check if wave is finished
-    if world.check_level_complete() == True:
+     if world.check_level_complete() == True:
        world.money += c.LEVEL_COMPLETE_REWARD
        world.level += 1
        level_started = False
@@ -164,10 +175,10 @@ while run:
     
     #draw buttons
     #button for placing turret
-    if turret_button.draw(screen):
+     if turret_button.draw(screen):
        placing_turrets = True
        #if placing turrets then show the cancel button as well
-    if placing_turrets == True:
+     if placing_turrets == True:
       #show cursor turret
       cursor_rect = cursor_turret.get_rect()
       cursor_pos = pg.mouse.get_pos()
@@ -177,9 +188,9 @@ while run:
       if cancel_button.draw(screen):
          placing_turrets = False
       #if turret is selected then show the upgrade button
-    if selected_turret:
+     if selected_turret:
      #if a turret can be upgraded then show a upgrade button
-     if selected_turret.upgrade_level < c.TURRET_LEVELS:
+      if selected_turret.upgrade_level < c.TURRET_LEVELS:
        if button_upgrade.draw(screen):
          if world.money >= c.UPGRADE_COST:
            selected_turret.upgrade()
