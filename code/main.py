@@ -64,7 +64,13 @@ def draw_text(text, font, text_col, x, y):
    img = font.render(text, True, text_col)
    screen.blit(img, (x, y))
 
-
+def display_data():
+   #draw panel
+   pg.draw.rect(screen, "maroon", (c.SCREEN_WIDTH, 0, c.SIDE_PANEL, c.SCREEN_HEIGHT))
+   
+   draw_text(str(world.health), text_font, "grey100", 0 , 0)
+   draw_text(str(world.money),text_font, "grey100", 0, 30)
+   draw_text(str(world.level),text_font, "grey100", 0, 60)
 
 def create_turret(mouse_pos):
    mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
@@ -153,10 +159,7 @@ while run:
     for turret in turret_group:
        turret.draw(screen)
 
-    draw_text(str(world.health), text_font, "grey100", 0 , 0)
-    draw_text(str(world.money),text_font, "grey100", 0, 30)
-    draw_text(str(world.level),text_font, "grey100", 0, 60)
-
+    display_data()
 
     if game_over == False:
     #check if level is being started or not
