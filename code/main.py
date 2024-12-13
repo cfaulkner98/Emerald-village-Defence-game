@@ -50,6 +50,9 @@ upgrade_turret_image = pg.image.load('images/turret_upgrade.png').convert_alpha(
 begin_image = pg.image.load('images/begin_1.png').convert_alpha()
 restart_image = pg.image.load('images/restart_1.png').convert_alpha()
 
+money_image = pg.image.load('images/money_1.png').convert_alpha()
+health_image = pg.image.load('images/health_1.png').convert_alpha()
+
 
 #load json data for level
 with open('map/waypoints.json') as file:
@@ -67,10 +70,12 @@ def draw_text(text, font, text_col, x, y):
 def display_data():
    #draw panel
    pg.draw.rect(screen, "maroon", (c.SCREEN_WIDTH, 0, c.SIDE_PANEL, c.SCREEN_HEIGHT))
-   
-   draw_text(str(world.health), text_font, "grey100", 0 , 0)
-   draw_text(str(world.money),text_font, "grey100", 0, 30)
-   draw_text(str(world.level),text_font, "grey100", 0, 60)
+   #display data
+   screen.blit(health_image, (c.SCREEN_WIDTH + 10, 35))
+   draw_text(str(world.health), text_font, "grey100", c.SCREEN_WIDTH + 50, 40) 
+   screen.blit(money_image, (c.SCREEN_WIDTH + 10, 65))
+   draw_text(str(world.money),text_font, "grey100", c.SCREEN_WIDTH + 50, 70)
+   draw_text("Level: " + str(world.level),text_font, "grey100", c.SCREEN_WIDTH + 10, 10)
 
 def create_turret(mouse_pos):
    mouse_tile_x = mouse_pos[0] // c.TILE_SIZE
@@ -149,7 +154,6 @@ while run:
 
     #drawing section
     #################
-    screen.fill("grey100")
 
     #draw level
     world.draw(screen) 
