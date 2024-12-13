@@ -17,6 +17,7 @@ screen = pg.display.set_mode((c.SCREEN_WIDTH + c.SIDE_PANEL, c.SCREEN_HEIGHT))
 pg.display.set_caption("Emerald Village: Defence")
 
 #game variables
+level_started = False
 last_enemy_spawn = pg.time.get_ticks()
 placing_turrets = False
 selected_turret = None
@@ -44,6 +45,7 @@ enemy_images = {
 buy_turret_image = pg.image.load('images/buy_turret.png').convert_alpha()
 cancel_image = pg.image.load('images/cancel.png').convert_alpha()
 upgrade_turret_image = pg.image.load('images/turret_upgrade.png').convert_alpha()
+begin_image = pg.image.load('images/begin_1.png').convert_alpha()
 
 #load json data for level
 with open('map/waypoints.json') as file:
@@ -103,6 +105,7 @@ turret_group = pg.sprite.Group()
 turret_button = Button(c.SCREEN_WIDTH + 30, 120, buy_turret_image, True)
 cancel_button = Button(c.SCREEN_WIDTH + 50, 180, cancel_image, True)
 button_upgrade = Button(c.SCREEN_WIDTH + 5, 180, upgrade_turret_image, True )
+begin_button = Button(c.SCREEN_WIDTH + 60, 300, begin_image, True)
 
 #game loop 
 run = True 
@@ -134,16 +137,30 @@ while run:
 
     draw_text(str(world.health), text_font, "grey100", 0 , 0)
     draw_text(str(world.money),text_font, "grey100", 0, 30)
+    draw_text(str(world.level),text_font, "grey100", 0, 60)
 
+   #check if level is being started or not
+    if level_started == False:
+       if begin_button.draw(screen):
+         level_started = True
+    else:
+     #spawn enemy
+     if pg.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
+        if world.spawned_enemies < len(world.enemy_list):
+          enemy_type = world.enemy_list[world.spawned_enemies]
+          enemy = Enemy(enemy_type, world.waypoints, enemy_images)
+          enemy_group.add(enemy)
+          world.spawned_enemies += 1
+          last_enemy_spawn = pg.time.get_ticks()
 
-   #spawn enemy
-    if pg.time.get_ticks() - last_enemy_spawn > c.SPAWN_COOLDOWN:
-      if world.spawned_enemies < len(world.enemy_list):
-        enemy_type = world.enemy_list[world.spawned_enemies]
-        enemy = Enemy(enemy_type, world.waypoints, enemy_images)
-        enemy_group.add(enemy)
-        world.spawned_enemies += 1
-        last_enemy_spawn = pg.time.get_ticks()
+    #check if wave is finished
+    if world.check_level_complete() == True:
+       world.money += c.LEVEL_COMPLETE_REWARD
+       world.level += 1
+       level_started = False
+       last_enemy_spawn = pg.time.get_ticks()
+       world.reset_level()
+       world.process_enemies()
     
     #draw buttons
     #button for placing turret
