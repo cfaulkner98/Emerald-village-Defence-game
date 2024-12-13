@@ -48,6 +48,8 @@ buy_turret_image = pg.image.load('images/buy_turret.png').convert_alpha()
 cancel_image = pg.image.load('images/cancel.png').convert_alpha()
 upgrade_turret_image = pg.image.load('images/turret_upgrade.png').convert_alpha()
 begin_image = pg.image.load('images/begin_1.png').convert_alpha()
+restart_image = pg.image.load('images/restart_1.png').convert_alpha()
+
 
 #load json data for level
 with open('map/waypoints.json') as file:
@@ -108,6 +110,8 @@ turret_button = Button(c.SCREEN_WIDTH + 30, 120, buy_turret_image, True)
 cancel_button = Button(c.SCREEN_WIDTH + 50, 180, cancel_image, True)
 button_upgrade = Button(c.SCREEN_WIDTH + 5, 180, upgrade_turret_image, True )
 begin_button = Button(c.SCREEN_WIDTH + 60, 300, begin_image, True)
+restart_button = Button(310, 300, restart_image, True)
+
 
 #game loop 
 run = True 
@@ -196,6 +200,15 @@ while run:
            selected_turret.upgrade()
            world.money -= c.UPGRADE_COST
        
+    else:
+       pg.draw.rect(screen, "dodgerblue", (200, 200, 400, 200), border_radius = 30)
+       if game_outcome == -1:
+          draw_text("Game Over", large_font, "grey0", 310, 230)
+       #restart level
+       if restart_button.draw(screen):
+          pass  
+        
+    
     
     #event handler
     for event in pg.event.get():
