@@ -128,6 +128,11 @@ while run:
           game_over = True
           game_outcome = -1 #lose
 
+       #check if won
+       if world.level > c.TOTAL_LEVELS:
+          game_over = True
+          game_outcome = 1 #winner
+
        #update groups
        enemy_group.update(world)
        turret_group.update(enemy_group)
@@ -204,12 +209,24 @@ while run:
        pg.draw.rect(screen, "dodgerblue", (200, 200, 400, 200), border_radius = 30)
        if game_outcome == -1:
           draw_text("Game Over", large_font, "grey0", 310, 230)
+       elif game_outcome == 1:
+          draw_text("WINNER", large_font, "grey0", 315, 230)
+          
        #restart level
        if restart_button.draw(screen):
-          pass  
+          game_over = False
+          level_started = False
+          placing_turrets = False
+          selected_turret = None
+          last_enemy_spawn = pg.time.get_ticks()
+          world = World(world_data, map_image)
+          world.process_data()
+          world.process_enemies()
+          #empty groups
+          enemy_group.empty()
+          turret_group.empty()
+
         
-    
-    
     #event handler
     for event in pg.event.get():
       #quit program

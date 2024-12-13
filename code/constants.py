@@ -7,6 +7,7 @@ SCREEN_HEIGHT = TILE_SIZE * ROWS
 FPS = 60
 health = 100
 money = 720
+TOTAL_LEVELS = 7
 
 #enemy constant
 SPAWN_COOLDOWN = 380
